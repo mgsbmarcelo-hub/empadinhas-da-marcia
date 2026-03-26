@@ -52,9 +52,49 @@ html
 
             html
 <a href="https://wa.me" 
-   style="background-color: #25d366; color: white; padding: 15px 25px; text-decoration: none; border-radius: 30px; font-weight: bold; font-family: sans-serif; display: inline-block;">
-   Pedir pelo WhatsApp
-</a><a
+html
+<div style="text-align: center; font-family: Arial, sans-serif;">
+  <!-- Seleção de Quantidade e Data -->
+  <div style="margin-bottom: 20px;">
+    <label>Quantidade (1-50):</label>
+    <input type="number" id="qtd" value="1" min="1" max="50" style="padding: 5px; width: 50px;">
+    
+    <label style="margin-left: 10px;">Data da Entrega:</label>
+    <input type="date" id="dataEntrega" style="padding: 5px;">
+  </div>
+
+  <!-- Botões de Sabores Lado a Lado -->
+  <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 20px;">
+    <button onclick="enviarPedido('Frango')" style="padding: 10px 20px; cursor: pointer; font-weight: bold;">Frango</button>
+    <button onclick="enviarPedido('Camarão')" style="padding: 10px 20px; cursor: pointer; font-weight: bold;">Camarão</button>
+  </div>
+
+  <!-- Botão WhatsApp Centralizado e 30% Maior -->
+  <a id="btnWhats" href="#" onclick="gerarLinkWhats(event)" style="background-color: #25d366; color: white; padding: 15px 30px; text-decoration: none; border-radius: 30px; font-weight: bold; font-size: 1.3em; display: inline-block;">
+     Pedir pelo WhatsApp
+  </a>
+</div>
+
+<script>
+  // Trava a data para não aceitar passado
+  const hoje = new Date().toISOString().split('T')[0];
+  document.getElementById('dataEntrega').setAttribute('min', hoje);
+
+  function gerarLinkWhats(e) {
+    const qtd = document.getElementById('qtd').value;
+    const data = document.getElementById('dataEntrega').value;
+    const num = "5521999999999"; // COLOQUE SEU NUMERO AQUI
+
+    if(!data) {
+      alert("Por favor, escolha uma data!");
+      e.preventDefault();
+      return;
+    }
+
+    const texto = `Olá! Quero encomendar ${qtd} empadas para o dia ${data}.`;
+    e.target.href = `https://wa.me{num}?text=${encodeURIComponent(texto)}`;
+  }
+</script>
 
     </div>
 
