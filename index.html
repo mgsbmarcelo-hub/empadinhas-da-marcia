@@ -1,122 +1,99 @@
-html
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Empadaria Gourmet</title>
+    <title>Loja de Empadas - Novo Pedido</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background-color: #fffaf0; color: #5d4037; text-align: center; padding: 20px; }
-        .vitrine { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 30px; }
-        .card { background: white; border: 2px solid #edc9af; border-radius: 20px; padding: 20px; width: 280px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-        .opcoes { text-align: left; margin: 15px 0; background: #fff5e6; padding: 10px; border-radius: 10px; }
-        .botao { display: inline-block; background: #e67e22; color: white; text-decoration: none; padding: 12px 25px; border-radius: 50px; font-weight: bold; transition: 0.3s; }
-        .botao:hover { background: #d35400; scale: 1.05; }
-        h1 { color: #d35400; font-size: 2.5em; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f4f4; padding: 20px; }
+        .container { max-width: 500px; margin: 0 auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        h2 { text-align: center; color: #d35400; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input, select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; }
+        
+        #lista-pedidos { margin-top: 20px; }
+        .pedido-item { background: #fff3e0; padding: 10px; border-radius: 5px; margin-bottom: 10px; display: flex; align-items: center; border-left: 5px solid #d35400; }
+        .pedido-item.confirmado { border-left-color: #27ae60; background: #e8f5e9; }
+        .pedido-item input[type="checkbox"] { width: auto; margin-right: 10px; }
+        
+        button { width: 100%; padding: 12px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: bold; transition: 0.3s; }
+        #btn-confirmar { background-color: #d35400; color: white; margin-top: 10px; }
+        #btn-confirmar.alterar { background-color: #f39c12; }
+        
+        #btn-whatsapp { background-color: #25d366; color: white; text-decoration: none; text-align: center; display: none; margin-top: 20px; padding: 15px; }
+        #btn-whatsapp.show { display: block; }
     </style>
 </head>
 <body>
 
-    <h1>🥧 Empadas do lucas</h1>
-    <p>Escolha seu sabor favorito e personalize!</p>
-
-    <div class="vitrine">
-        
-        <!-- MODELO DE PRODUTO: FRANGO -->
-        <div class="card">
-            <h3>Empadinha de Frango</h3>
-            <p>Frango desfiado temperado.</p>
-            
-            <div class="opcoes">
-                <strong>Adicionar Catupiry?</strong><br>
-                <input type="radio" name="frango" id="f_sem" checked> <label for="f_sem">Não (R$ 6,00)</label><br>
-                <input type="radio" name="frango" id="f_com"> <label for="f_com">Sim (+ R$ 1,50)</label>
-            </div>
-
-            <a href="#" onclick="enviarPedido('Frango')" class="botao">Pedir Agora</a>
-        </div>
-
-        <!-- MODELO DE PRODUTO: CAMARÃO -->
-        <div class="card">
-            <h3>Empadinha de Camarão</h3>
-            <p>Camarão fresco ao molho da casa.</p>
-            
-            <div class="opcoes">
-                <strong>Adicionar Catupiry?</strong><br>
-                <input type="radio" name="camarao" id="c_sem" checked> <label for="c_sem">Não (R$ 8,00)</label><br>
-                <input type="radio" name="camarao" id="c_com"> <label for="c_com">Sim (+ R$ 1,50)</label>
-            </div>
-<!-- LINHA NOVA DO BOTÃO (O QUE VOCÊ VAI ADICIONAR) -->
-<button onclick="pedir('Empada')" style="padding: 10px 20px; border-radius: 5px; font-weight: bold; cursor: pointer;">Pedir Empadinha</button>
-<br><br>
-
-            html
-<a href="https://wa.me" 
-html
-<div style="text-align: center; font-family: Arial, sans-serif;">
-  <!-- Seleção de Quantidade e Data -->
-  <div style="margin-bottom: 20px;">
-    <label>Quantidade (1-50):</label>
-    <input type="number" id="qtd" value="1" min="1" max="50" style="padding: 5px; width: 50px;">
+<div class="container">
+    <h2>Empadas da Vovó</h2>
     
-    <label style="margin-left: 10px;">Data da Entrega:</label>
-    <input type="date" id="dataEntrega" style="padding: 5px;">
-  </div>
+    <div id="area-form">
+        <div class="form-group">
+            <label>Tipo de Empada:</label>
+            <select id="sabor">
+                <option value="Frango">Frango</option>
+                <option value="Palmito">Palmito</option>
+                <option value="Carne Seca">Carne Seca</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Quantidade:</label>
+            <input type="number" id="qtd" value="1" min="1">
+        </div>
+        <div class="form-group">
+            <label>Data de Encomenda:</label>
+            <input type="date" id="data">
+        </div>
+        <button id="btn-confirmar" onclick="confirmarPedido()">Confirmar Pedido</button>
+    </div>
 
-  <!-- Botões de Sabores Lado a Lado -->
-  <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 20px;">
-    <button onclick="enviarPedido('Frango')" style="padding: 10px 20px; cursor: pointer; font-weight: bold;">Frango</button>
-    <button onclick="enviarPedido('Camarão')" style="padding: 10px 20px; cursor: pointer; font-weight: bold;">Camarão</button>
-  </div>
-
-  
-  <a id="btnWhats" href="#" onclick="gerarLinkWhats(event)" style="background-color: #25d366; color: white; padding: 15px 30px; text-decoration: none; border-radius: 30px; font-weight: bold; font-size: 1.3em; display: inline-block;">
-     Pedir pelo WhatsApp
-  </a>
+    <div id="lista-pedidos"></div>
+    <a href="#" id="btn-whatsapp" target="_blank">Enviar para WhatsApp</a>
 </div>
 
 <script>
-  // Trava a data para não aceitar passado
-  const hoje = new Date().toISOString().split('T')[0];
-  document.getElementById('dataEntrega').setAttribute('min', hoje);
+    let pedidoConfirmado = false;
 
-  function gerarLinkWhats(e) {
-    const qtd = document.getElementById('qtd').value;
-    const data = document.getElementById('dataEntrega').value;
-    const num = "5521999512027"; // COLOQUE SEU NUMERO AQUI
+    function confirmarPedido() {
+        const sabor = document.getElementById('sabor').value;
+        const qtd = document.getElementById('qtd').value;
+        const data = document.getElementById('data').value;
+        const btn = document.getElementById('btn-confirmar');
+        const lista = document.getElementById('lista-pedidos');
+        const btnZap = document.getElementById('btn-whatsapp');
 
-    if(!data) {
-      alert("Por favor, escolha uma data!");
-      e.preventDefault();
-      return;
-    }
+        if (!data) { alert("Por favor, selecione uma data."); return; }
 
-    const texto = `Olá! Quero encomendar ${qtd} empadas para o dia ${data}.`;
-    e.target.href = `https://wa.me{num}?text=${encodeURIComponent(texto)}`;
-  }
-</script>
-
-    </div>
-
-    <!-- Lógica para enviar ao WhatsApp -->
-    <script>
-        function enviarPedido(sabor) {
-            let numero = "5521999512027"; // COLOQUE SEU NÚMERO AQUI (com DDD)
-            let temCatupiry = "";
+        if (!pedidoConfirmado) {
+            // MODO CONFIRMAR
+            lista.innerHTML = `
+                <div class="pedido-item confirmado">
+                    <input type="checkbox" checked disabled>
+                    <span>${qtd}x Empada de ${sabor} - Entrega: ${data}</span>
+                </div>
+            `;
+            btn.innerText = "Alterar Dados";
+            btn.classList.add('alterar');
             
-            // Verifica qual rádio está marcado (ID simplificado para o exemplo)
-            if (sabor === 'Frango') {
-                temCatupiry = document.getElementById('f_com').checked ? "COM Catupiry" : "SEM Catupiry";
-            } else if (sabor === 'Camarão') {
-                temCatupiry = document.getElementById('c_com').checked ? "COM Catupiry" : "SEM Catupiry";
-            }
-
-            let mensagem = `Olá! Gostaria de pedir uma Empadinha de ${sabor} (${temCatupiry}).`;
-            let link = `https://wa.me{numero}?text=${encodeURIComponent(mensagem)}`;
+            // Prepara Botão Whatsapp
+            const mensagem = encodeURIComponent(`Olá! Quero encomendar: ${qtd} empada(s) de ${sabor} para o dia ${data}`);
+            btnZap.href = `https://wa.me{mensagem}`;
+            btnZap.classList.add('show');
             
-            window.open(link, '_blank');
+            pedidoConfirmado = true;
+        } else {
+            // MODO ALTERAR
+            btn.innerText = "Confirmar Pedido";
+            btn.classList.remove('alterar');
+            btnZap.classList.remove('show');
+            lista.innerHTML = "";
+            pedidoConfirmado = false;
         }
-    </script>
+    }
+</script>
 
 </body>
 </html>
